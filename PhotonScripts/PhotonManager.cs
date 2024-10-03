@@ -6,62 +6,62 @@ using UnityEngine.UI;
 public class PhotonManager : MonoBehaviour
 {
     [Header("Photon")]
-    public string version = "Ver 0.1.0"; // °ÔÀÓ ¹öÀü
-    public PhotonLogLevel LogLevel = PhotonLogLevel.ErrorsOnly; // ·Î±× ·¹º§
+    public string version = "Ver 0.1.0"; // ê²Œì„ ë²„ì „
+    public PhotonLogLevel LogLevel = PhotonLogLevel.ErrorsOnly; // ë¡œê·¸ ë ˆë²¨
     PhotonView pv;
-    public GameObject roomItem;        // ¹æ Á¤º¸ Ç¥½ÃÇÏ´Â ÇÁ¸®ÆÕ
-    public GameObject scrollContents;  //RoomItemÀÌ Â÷ÀÏµå·Î »ı¼ºµÉ Parent °´Ã¼
-    public GameObject playerInfoPanel;   // ¹æ¿¡ µé¾î°¬À»¶§ »ı¼ºµÇ´Â PlayerInfo°¡ »ı¼ºµÉ ºÎ¸ğ °´Ã¼
+    public GameObject roomItem;        // ë°© ì •ë³´ í‘œì‹œí•˜ëŠ” í”„ë¦¬íŒ¹
+    public GameObject scrollContents;  //RoomItemì´ ì°¨ì¼ë“œë¡œ ìƒì„±ë  Parent ê°ì²´
+    public GameObject playerInfoPanel;   // ë°©ì— ë“¤ì–´ê°”ì„ë•Œ ìƒì„±ë˜ëŠ” PlayerInfoê°€ ìƒì„±ë  ë¶€ëª¨ ê°ì²´
 
 
     [Header("Lobby UI")]
-    public GameObject btns; // ¸ŞÀÎÈ­¸éÀÇ ¹öÆ°µé
-    public GameObject createRoomPanel; // ¹æ¸¸µé±â ÆĞ³Î
-    public GameObject roomPanel;      //  ¹æ ÆĞ³Î
-    public GameObject findRoomPanel; // ¹æ Ã£±â ÆĞ³Î
-    public GameObject SetResolutionPanel; // È¯°æ¼³Á¤ ÆĞ³Î
-    public Text roomNameText;        // ¹æ ÀÌ¸§ ÅØ½ºÆ®
-    public InputField roomName; // ¹æ Á¦¸ñ ¼³Á¤ ÀÎÇ²
-    public Text gameStartText; // °ÔÀÓ ½ÃÀÛ ÅØ½ºÆ®
-    public GameObject title;   // °ÔÀÓ Á¦¸ñ
-    public GameObject titleLine;  // º£°æÈ­¸é ¶óÀÎ
+    public GameObject btns; // ë©”ì¸í™”ë©´ì˜ ë²„íŠ¼ë“¤
+    public GameObject createRoomPanel; // ë°©ë§Œë“¤ê¸° íŒ¨ë„
+    public GameObject roomPanel;      //  ë°© íŒ¨ë„
+    public GameObject findRoomPanel; // ë°© ì°¾ê¸° íŒ¨ë„
+    public GameObject SetResolutionPanel; // í™˜ê²½ì„¤ì • íŒ¨ë„
+    public Text roomNameText;        // ë°© ì´ë¦„ í…ìŠ¤íŠ¸
+    public InputField roomName; // ë°© ì œëª© ì„¤ì • ì¸í’‹
+    public Text gameStartText; // ê²Œì„ ì‹œì‘ í…ìŠ¤íŠ¸
+    public GameObject title;   // ê²Œì„ ì œëª©
+    public GameObject titleLine;  // ë² ê²½í™”ë©´ ë¼ì¸
 
 
     void Awake()
     {
-        if (!PhotonNetwork.connected)  // 2¹ø ¿¬°á ¾ÈµÇµµ·Ï
+        if (!PhotonNetwork.connected)  // 2ë²ˆ ì—°ê²° ì•ˆë˜ë„ë¡
         {
             PhotonNetwork.ConnectUsingSettings(version);
 
             PhotonNetwork.logLevel = LogLevel;
 
-            // ¸¶½ºÅÍ°¡ PhotonNetwork.LoadLevel()À» È£ÃâÇÏ¸é,
-            // ¸ğµç ÇÃ·¹ÀÌ¾î°¡ µ¿ÀÏÇÑ ·¹º§À» ÀÚµ¿À¸·Î ·Îµå
+            // ë§ˆìŠ¤í„°ê°€ PhotonNetwork.LoadLevel()ì„ í˜¸ì¶œí•˜ë©´,
+            // ëª¨ë“  í”Œë ˆì´ì–´ê°€ ë™ì¼í•œ ë ˆë²¨ì„ ìë™ìœ¼ë¡œ ë¡œë“œ
             PhotonNetwork.automaticallySyncScene = true;
         }
     }
 
-    #region Æ÷Åæ ÇÔ¼ö
-    void OnJoinedLobby() // ·Îºñ¿¡ µé¾î ¿ÔÀ»¶§
+    #region í¬í†¤ í•¨ìˆ˜
+    void OnJoinedLobby() // ë¡œë¹„ì— ë“¤ì–´ ì™”ì„ë•Œ
     {
         btns.SetActive(true);
         title.SetActive(true);
         titleLine.SetActive(true);
-        PhotonNetwork.player.NickName = PlayerPrefs.GetString("nickName"); // ÇÃ·¹ÀÌ¾î ´Ğ³×ÀÓ ¼³Á¤ 
+        PhotonNetwork.player.NickName = PlayerPrefs.GetString("nickName"); // í”Œë ˆì´ì–´ ë‹‰ë„¤ì„ ì„¤ì • 
     }
 
-    public void OnClickCreateRoom() // ¹æ»ı¼º
+    public void OnClickCreateRoom() // ë°©ìƒì„±
     {
-        createRoomPanel.SetActive(false); // ¹æ»ı¼º ÆĞ³ÎºñÈ°¼ºÈ­
-        btns.SetActive(false);            // ¹öÆ°µé ºñÈ°¼ºÈ­
+        createRoomPanel.SetActive(false); // ë°©ìƒì„± íŒ¨ë„ë¹„í™œì„±í™”
+        btns.SetActive(false);            // ë²„íŠ¼ë“¤ ë¹„í™œì„±í™”
         title.SetActive(false);
         titleLine.SetActive(false);
 
-        string _roomName = roomName.text;  // ¹æ ÀÌ¸§ ¼³Á¤
+        string _roomName = roomName.text;  // ë°© ì´ë¦„ ì„¤ì •
         
 
 
-        if (string.IsNullOrEmpty(roomName.text)) // ¹æÀÌ¸§ ¼³Á¤ ¾ÈÇÒ½Ã
+        if (string.IsNullOrEmpty(roomName.text)) // ë°©ì´ë¦„ ì„¤ì • ì•ˆí• ì‹œ
         {
             _roomName = "ROOM_" + Random.Range(0, 999).ToString("000");
             roomNameText.text = _roomName;
@@ -76,12 +76,12 @@ public class PhotonManager : MonoBehaviour
         roomName.text = string.Empty;
     }
 
-    public void OnJoinedRoom()  // ¹æ¿¡ Á¢¼Ó ÇßÀ»¶§
+    public void OnJoinedRoom()  // ë°©ì— ì ‘ì† í–ˆì„ë•Œ
     {
-        PhotonNetwork.player.NickName = PlayerPrefs.GetString("nickName");  // Æ÷Åæ ´Ğ³×ÀÓ ¼³Á¤
-        roomNameText.text = PhotonNetwork.room.Name;  // ¹æ Á¦¸ñ ¼¼ÆÃ
-        roomPanel.SetActive(true); // ¹æÆĞ³Î È°¼ºÈ­
-        title.SetActive(true);    // Á¦¸ñ È°¼ºÈ­
+        PhotonNetwork.player.NickName = PlayerPrefs.GetString("nickName");  // í¬í†¤ ë‹‰ë„¤ì„ ì„¤ì •
+        roomNameText.text = PhotonNetwork.room.Name;  // ë°© ì œëª© ì„¸íŒ…
+        roomPanel.SetActive(true); // ë°©íŒ¨ë„ í™œì„±í™”
+        title.SetActive(true);    // ì œëª© í™œì„±í™”
        
         GameObject player =  PhotonNetwork.Instantiate("PlayerInfoItem", Vector3.zero, Quaternion.identity, 0);
         //player.transform.SetParent(null);
@@ -89,26 +89,26 @@ public class PhotonManager : MonoBehaviour
         //player.transform.SetAsLastSibling();
 
 
-        if (PhotonNetwork.isMasterClient)   // ¸¶½ºÅÍÅ¬¶óÀÌ¾ğÆ®¸é °ÔÀÓ½ÃÀÛ¹öÆ°
+        if (PhotonNetwork.isMasterClient)   // ë§ˆìŠ¤í„°í´ë¼ì´ì–¸íŠ¸ë©´ ê²Œì„ì‹œì‘ë²„íŠ¼
         {
-            gameStartText.text = "°ÔÀÓ ½ÃÀÛ";
+            gameStartText.text = "ê²Œì„ ì‹œì‘";
         }
-        else                               // ¸¶½ºÅÍÅ¬¶óÀÌ¾ğÆ®°¡ ¾Æ´Ï¸é ÁØºñ¹öÆ°
+        else                               // ë§ˆìŠ¤í„°í´ë¼ì´ì–¸íŠ¸ê°€ ì•„ë‹ˆë©´ ì¤€ë¹„ë²„íŠ¼
         {
-            gameStartText.text = "ÁØºñ";
+            gameStartText.text = "ì¤€ë¹„";
         }
     }
 
-    public void PlayerReady()   // ÇÃ·¹ÀÌ¾î ·¹µğ ¹öÆ°
+    public void PlayerReady()   // í”Œë ˆì´ì–´ ë ˆë”” ë²„íŠ¼
     {
-        foreach (GameObject playerInfoItem in GameObject.FindGameObjectsWithTag("PlayerInfo"))  // ¹æ¿¡ ÀÖ´Â ÇÃ·¹ÀÌ¾î Á¤º¸
+        foreach (GameObject playerInfoItem in GameObject.FindGameObjectsWithTag("PlayerInfo"))  // ë°©ì— ìˆëŠ” í”Œë ˆì´ì–´ ì •ë³´
         {
             PlayerInfoItem _playerInfoItem = playerInfoItem.GetComponent<PlayerInfoItem>();
             _playerInfoItem.RPCIsReady();
         }
     }
 
-    void OnLeftRoom() // ¹æ¿¡¼­ Á¢¼Ó Á¾·áµÆÀ» ¶§ È£Ãâ
+    void OnLeftRoom() // ë°©ì—ì„œ ì ‘ì† ì¢…ë£Œëì„ ë•Œ í˜¸ì¶œ
     {
         btns.SetActive(true);
         title.SetActive(true);
@@ -117,27 +117,27 @@ public class PhotonManager : MonoBehaviour
         Debug.Log("quit");
     }
 
-    public void OnClickJoinRandomRoom()  // ºü¸¥ ½ÃÀÛ ¹öÆ°
+    public void OnClickJoinRandomRoom()  // ë¹ ë¥¸ ì‹œì‘ ë²„íŠ¼
     {
         PhotonNetwork.JoinRandomRoom();
         findRoomPanel.SetActive(false);
     }
 
-    void OnPhotonRandomJoinFailed()    // ¹æÀÌ ¾ø¾î¼­ ºü¸¥ ½ÃÀÛ ¸øÇßÀ»¶§
+    void OnPhotonRandomJoinFailed()    // ë°©ì´ ì—†ì–´ì„œ ë¹ ë¥¸ ì‹œì‘ ëª»í–ˆì„ë•Œ
     {
         findRoomPanel.SetActive(true);
         Debug.Log("No Rooms !!!");
     }
 
-    //»ı¼ºµÈ ·ë ¸ñ·ÏÀÌ º¯°æµÆÀ» ¶§ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö (ÃÖÃÊ ·ë Á¢¼Ó½Ã È£Ãâ) (UI ¹öÀü¿¡¼­ »ç¿ë)
+    //ìƒì„±ëœ ë£¸ ëª©ë¡ì´ ë³€ê²½ëì„ ë•Œ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜ (ìµœì´ˆ ë£¸ ì ‘ì†ì‹œ í˜¸ì¶œ)
     void OnReceivedRoomListUpdate()
     {
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("RoomItem"))  // ¹æ ¸ñ·Ï »èÁ¦
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("RoomItem"))  // ë°© ëª©ë¡ ì‚­ì œ
         {
             Destroy(obj);
         }
 
-        //Grid Layout Group ÄÄÆ÷³ÍÆ®ÀÇ Constraint Count °ªÀ» Áõ°¡½ÃÅ³ º¯¼ö
+        //Grid Layout Group ì»´í¬ë„ŒíŠ¸ì˜ Constraint Count ê°’ì„ ì¦ê°€ì‹œí‚¬ ë³€ìˆ˜
         int rowCount = 0;
 
         scrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 800);
@@ -155,7 +155,7 @@ public class PhotonManager : MonoBehaviour
             roomData.connectPlayer = _room.PlayerCount;
             roomData.maxPlayers = _room.MaxPlayers;
             roomData.DisplayRoomData();
-            roomData.joinBtn.onClick.AddListener(delegate () { OnClickRoomItem(roomData.roomName); });  // ÇÔ¼ö ÇÒ´ç
+            roomData.joinBtn.onClick.AddListener(delegate () { OnClickRoomItem(roomData.roomName); });  // í•¨ìˆ˜ í• ë‹¹
             roomData.joinBtn.onClick.AddListener(delegate () { SoundBtnClick(); });      
 
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
@@ -164,7 +164,7 @@ public class PhotonManager : MonoBehaviour
 
     }
 
-    void OnClickRoomItem(string roomName)  // Å¬¸¯ÇÑ ¹æ Á¢¼Ó ÇÔ¼ö
+    void OnClickRoomItem(string roomName)  // í´ë¦­í•œ ë°© ì ‘ì† í•¨ìˆ˜
     {
         PhotonNetwork.JoinRoom(roomName);
         findRoomPanel.SetActive(false);
@@ -172,29 +172,29 @@ public class PhotonManager : MonoBehaviour
 
     #endregion
 
-    #region Onclick ÇÔ¼ö
+    #region Onclick í•¨ìˆ˜
 
-    public void CreateRoomBtn()   // ¹æ »ı¼º ¹öÆ°
+    public void CreateRoomBtn()   // ë°© ìƒì„± ë²„íŠ¼
     {
         createRoomPanel.SetActive(true);
         
     }
 
-    public void CreateRoomCancelBtn()  // ¹æ »ı¼º Ãë¼Ò ¹öÆ°
+    public void CreateRoomCancelBtn()  // ë°© ìƒì„± ì·¨ì†Œ ë²„íŠ¼
     {
         createRoomPanel.SetActive(false);
         
         roomName.text = string.Empty;
     }
 
-    public void RoomQuitBtn()   // ¹æ ³ª°¡±â ¹öÆ°
+    public void RoomQuitBtn()   // ë°© ë‚˜ê°€ê¸° ë²„íŠ¼
     {
         PhotonNetwork.LeaveRoom();
         roomPanel.SetActive(false);
         title.SetActive(true);
     }
    
-    public void FindRoomBtn()  // ¹æ ¸ñ·Ï º¸±â ¹öÆ°
+    public void FindRoomBtn()  // ë°© ëª©ë¡ ë³´ê¸° ë²„íŠ¼
     {
         findRoomPanel.SetActive(true);
         btns.SetActive(false);
@@ -202,7 +202,7 @@ public class PhotonManager : MonoBehaviour
         titleLine.SetActive(false);
     }
 
-    public void FindRoomQuitBtn()  // ¹æ ¸ñ·Ï ³ª°¡±â ¹öÆ°
+    public void FindRoomQuitBtn()  // ë°© ëª©ë¡ ë‚˜ê°€ê¸° ë²„íŠ¼
     {
         findRoomPanel.SetActive(false);
         btns.SetActive(true);
@@ -210,48 +210,48 @@ public class PhotonManager : MonoBehaviour
         titleLine.SetActive(true);
     }
 
-    public void SetResolutionBtn()  // È¯°æ ¼³Á¤ ¹öÆ°
+    public void SetResolutionBtn()  // í™˜ê²½ ì„¤ì • ë²„íŠ¼
     {
         SetResolutionPanel.SetActive(true);
         title.SetActive(false);
         title.SetActive(false);
     }
 
-    public void SetResolutionQuitBtn()  // È¯°æ ¼³Á¤ ³ª°¡±â ¹öÆ°
+    public void SetResolutionQuitBtn()  // í™˜ê²½ ì„¤ì • ë‚˜ê°€ê¸° ë²„íŠ¼
     {
         SetResolutionPanel.SetActive(false);
         title.SetActive(true);
         titleLine.SetActive(true);
     }
 
-    public void GameStartBtn()  // °ÔÀÓ ½ÃÀÛ ¹öÆ°
+    public void GameStartBtn()  // ê²Œì„ ì‹œì‘ ë²„íŠ¼
     {
-        if (PhotonNetwork.isMasterClient)   // ¸¶½ºÅÍÅ¬¶óÀÌ¾ğÆ®¸é °ÔÀÓ½ÃÀÛ¹öÆ°
+        if (PhotonNetwork.isMasterClient)   // ë§ˆìŠ¤í„°í´ë¼ì´ì–¸íŠ¸ë©´ ê²Œì„ì‹œì‘ë²„íŠ¼
         {
             foreach (GameObject playerInfoItem in GameObject.FindGameObjectsWithTag("PlayerInfo"))
             {
                 PlayerInfoItem _playerInfoItem = playerInfoItem.GetComponent<PlayerInfoItem>();
                 if (!_playerInfoItem.isReady)
                 {
-                    return; // ÇÏ³ª¶óµµ ÁØºñ°¡ ¾È µÈ ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é Á¾·á
+                    return; // í•˜ë‚˜ë¼ë„ ì¤€ë¹„ê°€ ì•ˆ ëœ í”Œë ˆì´ì–´ê°€ ìˆìœ¼ë©´ ì¢…ë£Œ
                 }
             }
             //StartCoroutine(LoadStage(2));
             ScenesManager.instance.LoadStage(2);
         }
-        else                          // ¸¶½ºÅÍÅ¬¶óÀÌ¾ğÆ®°¡ ¾Æ´Ï¸é ÁØºñ¹öÆ°
+        else                          // ë§ˆìŠ¤í„°í´ë¼ì´ì–¸íŠ¸ê°€ ì•„ë‹ˆë©´ ì¤€ë¹„ë²„íŠ¼
         {
             PlayerReady();
         }
     }
 
     
-    public void QuitBtn()  // ·Îºñ ³ª°¡±â ¹öÆ°
+    public void QuitBtn()  // ë¡œë¹„ ë‚˜ê°€ê¸° ë²„íŠ¼
     {
         Application.Quit();
     }
 
-    public void SoundBtnClick()         // ¹öÆ° Å¬¸¯½Ã »ç¿îµå Àç»ı
+    public void SoundBtnClick()         // ë²„íŠ¼ í´ë¦­ì‹œ ì‚¬ìš´ë“œ ì¬ìƒ
     {
         SoundManager.instance.BtnClick();
     }
