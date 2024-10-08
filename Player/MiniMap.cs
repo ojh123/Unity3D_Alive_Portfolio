@@ -5,36 +5,30 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour
 {
     [SerializeField]
-    Transform player;   // ÂüÁ¶ÇÒ ÇÃ·¹ÀÌ¾îÀÇ Æ®·£½ºÆû
-    public RectTransform maskRect;   // ¸¶½ºÅ© Æ®·£½ºÆû
-    public RectTransform miniMapRect; // ¹Ì´Ï¸Ê Æ®·£½ºÆû
-    public RectTransform playerIcon; // ÇÃ·¹ÀÌ¾î ¾ÆÀÌÄÜ Æ®·£½ºÆû
+    Transform player;   // ì°¸ì¡°í•  í”Œë ˆì´ì–´ì˜ íŠ¸ëœìŠ¤í¼
+    public RectTransform maskRect;   // ë§ˆìŠ¤í¬ íŠ¸ëœìŠ¤í¼
+    public RectTransform miniMapRect; // ë¯¸ë‹ˆë§µ íŠ¸ëœìŠ¤í¼
+    public RectTransform playerIcon; // í”Œë ˆì´ì–´ ì•„ì´ì½˜ íŠ¸ëœìŠ¤í¼
     public PhotonView pv;
 
-    [Header("º¸Á¤ÇÒ ¹Ì´Ï¸Ê º¯¼ö")]
-    public float miniMapMoveSpeed;  // ÇÃ·¹ÀÌ¾î ¼Óµµ¿Í ¹Ì´Ï¸Ê ¿òÁ÷ÀÌ´Â ¼Óµµ º¸Á¤
-    public float miniMapSizeX;  // º¸Á¤ÇÒ ¹Ì´Ï¸Ê  X
-    public float miniMapSizeY;  // º¸Á¤ÇÒ ¹Ì´Ï¸Ê  Y 
+    [Header("ë³´ì •í•  ë¯¸ë‹ˆë§µ ë³€ìˆ˜")]
+    public float miniMapMoveSpeed;  // í”Œë ˆì´ì–´ ì†ë„ì™€ ë¯¸ë‹ˆë§µ ì›€ì§ì´ëŠ” ì†ë„ ë³´ì •
+    public float miniMapSizeX;  // ë³´ì •í•  ë¯¸ë‹ˆë§µ  X
+    public float miniMapSizeY;  // ë³´ì •í•  ë¯¸ë‹ˆë§µ  Y 
 
-    [Header("´Ù¸¥ ÇÃ·¹ÀÌ¾î")]
+    [Header("ë‹¤ë¥¸ í”Œë ˆì´ì–´")]
     public RectTransform P1;
     public RectTransform P2;
     public RectTransform P3;
 
-
-    private void Start()
-    {
-        
-    }
-
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾îÀÇ YÃà È¸Àü °¢µµ
+        // í”Œë ˆì´ì–´ì˜ Yì¶• íšŒì „ ê°ë„
         float playerYRot = player.rotation.eulerAngles.y;
         maskRect.rotation = Quaternion.Euler(0, 0, playerYRot);
         playerIcon.rotation = Quaternion.Euler(0, 0, 0);
 
-        // ¹Ì´Ï¸Ê ¿òÁ÷ÀÓ
+        // ë¯¸ë‹ˆë§µ ì›€ì§ì„
         miniMapRect.anchoredPosition = new Vector3(-player.position.x * miniMapMoveSpeed - miniMapSizeX, -player.position.z * miniMapMoveSpeed + miniMapSizeY, 0);
     }
 
