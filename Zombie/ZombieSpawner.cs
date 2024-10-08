@@ -1,49 +1,3 @@
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class ZombieSpawner : MonoBehaviour
-//{
-
-//    public Transform[] spawnPoints; // ½ºÆù Æ÷ÀÎÆ® ¹è¿­
-//    public int curZombieCount = 0; // ÇöÀç Á»ºñ ¼ö
-//    public int maxZombieCount = 30; // ÃÖ´ë Á»ºñ ¼ö
-//    private float spawnTime = 0.0f; // ½ºÆù Å¸ÀÌ¸Ó
-//    private float zombieSpawnTime = 10f;  // Á»ºñ ½ºÆù ½Ã°£
-
-//    PhotonView pv;
-
-//    private void Awake()
-//    {
-//        pv = GetComponent<PhotonView>();
-//    }
-
-//    private void Start()
-//    {
-//        if (PhotonNetwork.isMasterClient)
-//        {
-//            for (int i = 0; curZombieCount < maxZombieCount; i++)
-//            {
-//                PhotonNetwork.Instantiate("Zombie", spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity, 0);
-//                curZombieCount++;
-//            }
-//        }
-//    }
-
-//    void Update()
-//    {
-//        spawnTime += Time.deltaTime;
-
-//        // Á»ºñ ½ºÆù Á¶°Ç
-//        if (spawnTime > zombieSpawnTime && PhotonNetwork.isMasterClient && curZombieCount < maxZombieCount)
-//        {
-//            GameObject newObj = PhotonNetwork.Instantiate("Zombie", spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity, 0) as GameObject;
-//            spawnTime = 0;
-//            curZombieCount++;
-//        }
-//    }
-//}
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,11 +5,11 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-    public Transform[] spawnPoints; // ½ºÆù Æ÷ÀÎÆ® ¹è¿­
-    public int maxZombieCount = 30; // ÃÖ´ë Á»ºñ ¼ö
-    private float spawnTime = 0.0f; // ½ºÆù Å¸ÀÌ¸Ó
-    private float zombieSpawnTime = 15f;  // Á»ºñ ½ºÆù ½Ã°£
-    public List<GameObject> zombiePool; // Á»ºñ ¿ÀºêÁ§Æ® Ç®
+    public Transform[] spawnPoints; // ìŠ¤í° í¬ì¸íŠ¸ ë°°ì—´
+    public int maxZombieCount = 30; // ìµœëŒ€ ì¢€ë¹„ ìˆ˜
+    private float spawnTime = 0.0f; // ìŠ¤í° íƒ€ì´ë¨¸
+    private float zombieSpawnTime = 15f;  // ì¢€ë¹„ ìŠ¤í° ì‹œê°„
+    public List<GameObject> zombiePool; // ì¢€ë¹„ ì˜¤ë¸Œì íŠ¸ í’€
     public int curZombieCount;
     PhotonView pv;
 
@@ -72,10 +26,10 @@ public class ZombieSpawner : MonoBehaviour
 
             for (int i = 0; i < maxZombieCount; i++)
             {
-                GameObject zombie = PhotonNetwork.Instantiate("Zombie", Vector3.zero, Quaternion.identity, 0);  // Á»ºñ»ı¼º
-                zombie.transform.SetParent(transform);  // »ı¼ºµÈ Á»ºñ ºÎ¸ğ ¼³Á¤
-                zombie.SetActive(false); // »ı¼ºµÈ Á»ºñ¸¦ ºñÈ°¼ºÈ­
-                zombiePool.Add(zombie);  // ¸®½ºÆ®¿¡ ³Ö±â
+                GameObject zombie = PhotonNetwork.Instantiate("Zombie", Vector3.zero, Quaternion.identity, 0);  // ì¢€ë¹„ìƒì„±
+                zombie.transform.SetParent(transform);  // ìƒì„±ëœ ì¢€ë¹„ ë¶€ëª¨ ì„¤ì •
+                zombie.SetActive(false); // ìƒì„±ëœ ì¢€ë¹„ë¥¼ ë¹„í™œì„±í™”
+                zombiePool.Add(zombie);  // ë¦¬ìŠ¤íŠ¸ì— ë„£ê¸°
                 pv.RPC("ZombieActivefalse", PhotonTargets.Others, zombie.GetComponent<PhotonView>().viewID);
                 SpawnZombie();
             }
@@ -88,7 +42,7 @@ public class ZombieSpawner : MonoBehaviour
         {
             spawnTime += Time.deltaTime;
 
-            // Á»ºñ ½ºÆù Á¶°Ç
+            // ì¢€ë¹„ ìŠ¤í° ì¡°ê±´
             if (spawnTime > zombieSpawnTime && curZombieCount < maxZombieCount)
             {
                 SpawnZombie();
@@ -112,44 +66,44 @@ public class ZombieSpawner : MonoBehaviour
         }
     }
 
-    void SpawnZombie(GameObject zombie, Vector3 position)   // Á»ºñ ½ºÆù
+    void SpawnZombie(GameObject zombie, Vector3 position)   // ì¢€ë¹„ ìŠ¤í°
     {
         zombie.transform.position = position;
-        zombie.SetActive(true); // Á»ºñ¸¦ È°¼ºÈ­
+        zombie.SetActive(true); // ì¢€ë¹„ë¥¼ í™œì„±í™”
         zombie.GetComponent<ZombieController>().isDead = false;
         pv.RPC("ZombieActivetrue", PhotonTargets.Others, zombie.GetComponent<PhotonView>().viewID, position);
     }
 
     [PunRPC]
-    void ZombieActivetrue(int viewID, Vector3 position)    // Á»ºñ ½ºÆù RPC
+    void ZombieActivetrue(int viewID, Vector3 position)    // ì¢€ë¹„ ìŠ¤í° RPC
     {
         GameObject zombie = PhotonView.Find(viewID).gameObject;
         zombie.transform.position = position;
-        zombie.SetActive(true); // Á»ºñ¸¦ È°¼ºÈ­
+        zombie.SetActive(true); // ì¢€ë¹„ë¥¼ í™œì„±í™”
         zombie.GetComponent<ZombieController>().isDead = false;
     }
 
     [PunRPC]
-    void ZombieActivefalse(int viewID)   // Á»ºñ ºñÈ°¼ºÈ­ RPC
+    void ZombieActivefalse(int viewID)   // ì¢€ë¹„ ë¹„í™œì„±í™” RPC
     {
-        GameObject zombie = PhotonView.Find(viewID).gameObject;  // Á»ºñÀÇ Æ÷Åæºä ¾ÆÀÌµğ¸¦ Ã£±â
+        GameObject zombie = PhotonView.Find(viewID).gameObject;  // ì¢€ë¹„ì˜ í¬í†¤ë·° ì•„ì´ë””ë¥¼ ì°¾ê¸°
         ZombieController zombieController = zombie.GetComponent<ZombieController>();
-        zombie.SetActive(false); // »ı¼ºµÈ Á»ºñ¸¦ ºñÈ°¼ºÈ­
+        zombie.SetActive(false); // ìƒì„±ëœ ì¢€ë¹„ë¥¼ ë¹„í™œì„±í™”
         zombieController.HP = 100;
         zombieController.players.Clear();
         
     }
 
-    public void DieZombie(GameObject zombie)   // Á»ºñ°¡ Á×¾úÀ»‹š È£Ãâ
+    public void DieZombie(GameObject zombie)   // ì¢€ë¹„ê°€ ì£½ì—ˆì„Â‹Âš í˜¸ì¶œ
     {
         StartCoroutine(DieZombieCor(zombie));
     }
 
     private IEnumerator DieZombieCor(GameObject zombie)
     {
-        yield return new WaitForSeconds(5f); // 5ÃÊ ´ë±â
-        curZombieCount--;        // ÇöÀç Á»ºñ¼ö °¨¼Ò
-        zombie.SetActive(false); // Á»ºñ¸¦ ºñÈ°¼ºÈ­
+        yield return new WaitForSeconds(5f); // 5ì´ˆ ëŒ€ê¸°
+        curZombieCount--;        // í˜„ì¬ ì¢€ë¹„ìˆ˜ ê°ì†Œ
+        zombie.SetActive(false); // ì¢€ë¹„ë¥¼ ë¹„í™œì„±í™”
         pv.RPC("ZombieActivefalse", PhotonTargets.Others, zombie.GetComponent<PhotonView>().viewID);
     }
 }
