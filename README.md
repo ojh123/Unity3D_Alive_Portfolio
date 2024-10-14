@@ -1,11 +1,12 @@
 # Unity3D_Alive_Portfolio
 ## 1. 소개
+<div align="center">
 <img src="https://github.com/user-attachments/assets/23cd14d5-ed33-4195-870e-3dd0085c9625" width="49%" height="230"/>
 <img src="https://github.com/user-attachments/assets/268bdce1-1c52-4591-ac0f-c1c9596ec498" width="49%" height="230"/>
 <img src="https://github.com/user-attachments/assets/e9419289-63a6-46db-9ccc-f0555b8467dd" width="49%" height="230"/>
 <img src="https://github.com/user-attachments/assets/c7a0a38e-6bc3-4495-9a9f-6157e2857eb4" width="49%" height="230"/>
-
-
+</div>
+<게임 플레이 사진>
 
 + 팀원과 좀비를 피해 도시에서 파밍을 하고 기지를 업그레이드하며 생존하는 게임입니다.
 
