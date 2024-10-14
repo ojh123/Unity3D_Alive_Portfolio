@@ -1,5 +1,6 @@
 # Unity3D_Alive_Portfolio
 ## 1. 소개
+![2024-08-13_163630](https://github.com/user-attachments/assets/23cd14d5-ed33-4195-870e-3dd0085c9625)
 + 팀원과 좀비를 피해 도시에서 파밍을 하고 기지를 업그레이드하며 생존하는 게임입니다.
 
 + 형상 관리 : Git Hub, SourceTree
