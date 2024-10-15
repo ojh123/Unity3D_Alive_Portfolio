@@ -48,3 +48,4 @@
 ## 4. 기술문서
 <https://docs.google.com/presentation/d/1jljotF0MApn_K9B_J1Eok09TeLzGsqylSDeYXS7MmAU/edit#slide=id.g304147988bf_0_87>
 ## 5. 플레이영상
+<https://youtu.be/jat13CmBziM>
