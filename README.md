@@ -26,6 +26,8 @@
 + C#
   
 + Window 10
+
++ Visual Studio 2019
 ## 3. 개발내용
 + 로그인/회원가입
   + 아파치, PHP, MySql을 이용해 간단한 백엔드 구현
